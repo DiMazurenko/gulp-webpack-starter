@@ -4,8 +4,8 @@ import { plugins } from './gulp/config/plugins.js';
 
 // Passing values to a global variable
 global.app = {
-  isBuild: process.argv.includes('--build'),
-  isDev: !process.argv.includes('--build'),
+  isBuild: process.argv.includes('--build'), // production mode
+  isDev: !process.argv.includes('--build'), // developer mode
   path: path,
   gulp: gulp,
   plugins: plugins,
@@ -27,7 +27,7 @@ import { ftp } from './gulp/tasks/ftp.js';
 // File change watcher
 function watcher() {
   gulp.watch(path.watch.files, copy);
-  gulp.watch(path.watch.html, html); //gulp.series(html, ftp)
+  gulp.watch(path.watch.html, html); //if need update on FTP 'html => gulp.series(html, ftp)'
   gulp.watch(path.watch.scss, scss);
   gulp.watch(path.watch.js, js);
   gulp.watch(path.watch.images, images);
@@ -48,7 +48,7 @@ const build = gulp.series(reset, mainTasks);
 const deployZIP = gulp.series(reset, mainTasks, zip);
 const deployFTP = gulp.series(reset, mainTasks, ftp);
 
-// Экспорт сценариев
+// export scenarios
 export { svgSpriteTask };
 export { dev };
 export { build };
